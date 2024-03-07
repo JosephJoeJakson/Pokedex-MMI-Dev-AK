@@ -7,10 +7,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document("User")
 @TypeAlias("UserData")
 public class UserData {
+    
     @Id
     private String login;
     private String password;
     private boolean admin;
+
 
     public UserData(){
         this("user","",false);

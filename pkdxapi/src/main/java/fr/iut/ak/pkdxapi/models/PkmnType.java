@@ -20,5 +20,3 @@ public enum PkmnType {
     STEEL, 
     FAIRY;
 }
-
-  

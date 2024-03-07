@@ -23,8 +23,9 @@ public class SecurityConfiguration {
         http
         .authorizeHttpRequests((authorizeRequests) -> authorizeRequests                                
         .requestMatchers("/users/register").permitAll()               
-        .requestMatchers("/whois").hasAuthority("ROLE_ADMIN")
-        .requestMatchers("/pkmn/types**").authenticated() 
+        .requestMatchers("/users/test").hasAuthority("ROLE_ADMIN")
+        .requestMatchers("/pkmn/**").authenticated()
+        .requestMatchers("/users/login").authenticated()
     )                      
             .httpBasic(Customizer.withDefaults()).csrf(csrf->csrf.disable()) ;  // disable csrf security to authorize post, patch & delete
 
