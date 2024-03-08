@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,6 +16,8 @@ import fr.iut.ak.pkdxapi.services.PkmnService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 
@@ -68,6 +72,22 @@ public class PkmnController {
                                                @RequestParam(required = false) String name) {
         PkmnData pkmnData = pkmnService.getPokemon(id, name);
         return ResponseEntity.ok(pkmnData);
+    }
+
+    
+    @DeleteMapping("/pkmn")
+    @Secured({"ROLE_ADMIN"})
+    public ResponseEntity<Void> deletePokemon(@RequestParam String id) {
+        pkmnService.deletePokemonById(id);
+        // Retourne un code 204 No Content
+        return ResponseEntity.noContent().build(); 
+    }
+
+    @PutMapping("/pkmn")
+    @Secured({"ROLE_ADMIN"})
+    public ResponseEntity<PkmnData> updatePokemon(@RequestParam String id, @RequestBody PkmnData updateDTO) {
+        PkmnData updatedPokemon = pkmnService.updatePokemon(id, updateDTO);
+        return ResponseEntity.ok(updatedPokemon);
     }
 
 }

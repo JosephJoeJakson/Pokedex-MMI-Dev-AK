@@ -113,5 +113,25 @@ public class PkmnService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Either 'id' or 'name' parameter must be provided");
         }
     }
+
+    public void deletePokemonById(String id) {
+        if (!pkmnRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pokemon not found");
+        }
+        pkmnRepository.deleteById(id);
+    }
+
+    public PkmnData updatePokemon(String id, PkmnData updateDTO) {
+        PkmnData pkmnData = pkmnRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pokemon not found"));
+
+        // Mettez à jour seulement les champs fournis
+        if (updateDTO.getPokemonName() != null) pkmnData.setName(updateDTO.getPokemonName());
+        if (updateDTO.getPokemonDescription() != null) pkmnData.setDescription(updateDTO.getPokemonDescription());
+        if (updateDTO.getPokemonImg() != null) pkmnData.setImgUrl(updateDTO.getPokemonImg());
+        if (updateDTO.getPokemonTypes() != null) pkmnData.setTypes(updateDTO.getPokemonTypes());
+        
+        return pkmnRepository.save(pkmnData);
+    }
 }
 
