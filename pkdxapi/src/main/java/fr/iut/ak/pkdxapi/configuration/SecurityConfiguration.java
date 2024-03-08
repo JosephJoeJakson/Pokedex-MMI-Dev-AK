@@ -14,6 +14,7 @@ import fr.iut.ak.pkdxapi.services.CustomUserDetailsService;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 
 @Configuration
 @EnableWebSecurity
@@ -22,11 +23,12 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
         .authorizeHttpRequests((authorizeRequests) -> authorizeRequests                                
-        .requestMatchers("/users/register").permitAll()               
-        .requestMatchers("/users/test").hasAuthority("ROLE_ADMIN")
-        .requestMatchers("/pkmn/**").authenticated()
         .requestMatchers("/users/login").authenticated()
-    )                      
+        .requestMatchers("/users/register").permitAll()
+        .requestMatchers(HttpMethod.PUT, "/pkmn/**", "/pkmn").hasAuthority("ROLE_ADMIN")
+        .requestMatchers(HttpMethod.DELETE, "/pkmn/**", "/pkmn").hasAuthority("ROLE_ADMIN")
+        .requestMatchers("/pkmn/**", "/pkmn", "/trainer", "/trainer/**").authenticated() 
+    )                       
             .httpBasic(Customizer.withDefaults()).csrf(csrf->csrf.disable()) ;  // disable csrf security to authorize post, patch & delete
 
         return http.build();

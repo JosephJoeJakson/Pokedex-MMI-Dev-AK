@@ -76,7 +76,7 @@ public class PkmnController {
 
     
     @DeleteMapping("/pkmn")
-    @Secured({"ROLE_ADMIN"})
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<Void> deletePokemon(@RequestParam String pkmnID) {
         pkmnService.deletePokemonById(pkmnID);
         // Retourne un code 204 No Content
