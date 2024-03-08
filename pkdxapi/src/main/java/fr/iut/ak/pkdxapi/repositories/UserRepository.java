@@ -8,9 +8,11 @@ import fr.iut.ak.pkdxapi.models.UserData;
 import java.util.Optional;
 
 
-
+// Repository pour les utilisateurs
 @Repository
 public interface UserRepository extends MongoRepository<UserData,String>{
+
+   // Query pour vérifier si l'utilisateur existe déjà
    @Query("{ '_id' : ?0 }")
    Optional<UserData> findByLogin(String _id);
 

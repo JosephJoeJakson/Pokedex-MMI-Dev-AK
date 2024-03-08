@@ -11,13 +11,17 @@ import org.springframework.security.core.userdetails.User;
 import fr.iut.ak.pkdxapi.models.UserData;
 import fr.iut.ak.pkdxapi.repositories.UserRepository;
 
-
+// Service pour les rôles
 public class CustomUserDetailsService implements UserDetailsService{
 
+    // Récupère le userRepository
     private final UserRepository userRepository;
+
+    // Récupère les différents authorisations
     private List<GrantedAuthority> userAuthorities;
     private List<GrantedAuthority> adminAuthorities;
-
+    
+    // Renvoie le rôle
     public CustomUserDetailsService(UserRepository userRepository){
         this.userRepository = userRepository;
         userAuthorities = AuthorityUtils.createAuthorityList("ROLE_USER");        

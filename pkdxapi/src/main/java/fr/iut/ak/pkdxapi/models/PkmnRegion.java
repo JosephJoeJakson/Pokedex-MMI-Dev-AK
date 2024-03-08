@@ -9,7 +9,7 @@ public class PkmnRegion {
         this.regionName = regionName;
         this.regionNumber = regionNumber;
     }
-
+    
     public int getRegionNumber() {
         return regionNumber;
     }

@@ -14,7 +14,7 @@ public class PkmnData extends Pkmn {
         super(name, description, imgUrl, types, regions);
         this.id = id;
     }
-
+    
     public String getId() {
         return id;
     }

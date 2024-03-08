@@ -33,6 +33,10 @@ public class Pkmn {
         return types;
     }
 
+    public void setPokemonRegions(List<PkmnRegion> regions) {
+        this.regions = regions;
+    }
+    
     public List<PkmnRegion> getPokemonRegions() {
         return regions;
     }

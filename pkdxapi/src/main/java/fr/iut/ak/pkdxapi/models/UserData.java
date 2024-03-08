@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+// Class UserData
 @Document("User")
 @TypeAlias("UserData")
 public class UserData {
@@ -13,7 +14,7 @@ public class UserData {
     private String password;
     private boolean admin;
 
-
+    // Défini le USerData avec un Login, un Password et un booléen pour savoir si il est admin
     public UserData(){
         this("user","",false);
     }
@@ -36,3 +37,5 @@ public class UserData {
         return password;
     }
 }
+
+
