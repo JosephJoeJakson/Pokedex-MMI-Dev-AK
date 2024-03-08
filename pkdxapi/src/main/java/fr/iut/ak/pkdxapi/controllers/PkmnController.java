@@ -47,10 +47,10 @@ public class PkmnController {
     
 
     @PostMapping("/pkmn/region")
-    public ResponseEntity<PkmnData> addRegionToPokemon(@RequestParam("pokemonName") String pokemonName,
+    public ResponseEntity<PkmnData> addRegionToPokemon(@RequestParam("pkmnID") String pkmnID,
                                                        @RequestParam("regionName") String regionName,
                                                        @RequestParam("regionNumber") int regionNumber) {
-        PkmnData updatedPokemon = pkmnService.addRegionToPokemon(pokemonName, regionName, regionNumber);
+        PkmnData updatedPokemon = pkmnService.addRegionToPokemon(pkmnID, regionName, regionNumber);
         return ResponseEntity.ok(updatedPokemon);
     }
 
@@ -68,26 +68,33 @@ public class PkmnController {
     }
 
     @GetMapping("/pkmn")
-    public ResponseEntity<PkmnData> getPokemon(@RequestParam(required = false) String id, 
-                                               @RequestParam(required = false) String name) {
-        PkmnData pkmnData = pkmnService.getPokemon(id, name);
+    public ResponseEntity<PkmnData> getPokemon(@RequestParam(required = false) String pkmnID, 
+                                               @RequestParam(required = false) String pkmnName) {
+        PkmnData pkmnData = pkmnService.getPokemon(pkmnID, pkmnName);
         return ResponseEntity.ok(pkmnData);
     }
 
     
     @DeleteMapping("/pkmn")
     @Secured({"ROLE_ADMIN"})
-    public ResponseEntity<Void> deletePokemon(@RequestParam String id) {
-        pkmnService.deletePokemonById(id);
+    public ResponseEntity<Void> deletePokemon(@RequestParam String pkmnID) {
+        pkmnService.deletePokemonById(pkmnID);
         // Retourne un code 204 No Content
         return ResponseEntity.noContent().build(); 
     }
 
     @PutMapping("/pkmn")
     @Secured({"ROLE_ADMIN"})
-    public ResponseEntity<PkmnData> updatePokemon(@RequestParam String id, @RequestBody PkmnData updateDTO) {
-        PkmnData updatedPokemon = pkmnService.updatePokemon(id, updateDTO);
+    public ResponseEntity<PkmnData> updatePokemon(@RequestParam String pkmnID, @RequestBody PkmnData updateDTO) {
+        PkmnData updatedPokemon = pkmnService.updatePokemon(pkmnID, updateDTO);
         return ResponseEntity.ok(updatedPokemon);
     }
-
+    
+    @DeleteMapping("/pkmn/region")
+    @Secured({"ROLE_ADMIN"})
+    public ResponseEntity<PkmnData> removeRegionFromPokemon(@RequestParam("pkmnID") String pkmnID, 
+                                                             @RequestParam("regionName") String regionName) {
+        PkmnData updatedPokemon = pkmnService.removeRegionFromPokemon(pkmnID, regionName);
+        return ResponseEntity.ok(updatedPokemon);
+    }
 }
